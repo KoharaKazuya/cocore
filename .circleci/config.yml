@@ -10,7 +10,7 @@ jobs:
 
       # Restore caches
       - restore_cache:
-          key: rustup-v1
+          key: rustup-v2
       - restore_cache:
           key: cargo-v1-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}
 
@@ -41,7 +41,7 @@ jobs:
 
       # Save caches
       - save_cache:
-          key: rustup-v1
+          key: rustup-v2
           paths:
             - /usr/local/rustup
       - save_cache:
