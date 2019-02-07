@@ -1,0 +1,51 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/rust:1
+
+    steps:
+      - checkout
+
+      # Restore caches
+      - restore_cache:
+          key: rustup-v1
+      - restore_cache:
+          key: cargo-v1-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}
+
+      # Add Rust target
+      - run:
+          name: rustup target (Linux)
+          command: rustup target add x86_64-unknown-linux-gnu
+      # - run:
+      #     name: rustup target (macOS)
+      #     command: rustup target add x86_64-apple-darwin
+
+      # Run tests and builds
+      - run:
+          name: cargo test
+          command: cargo test
+      - run:
+          name: cargo build (Linux)
+          command: cargo build --release --target x86_64-unknown-linux-gnu
+      # - run:
+      #     name: cargo build (macOS)
+      #     command: cargo build --release --target x86_64-apple-darwin
+
+      # Save artifacts
+      - store_artifacts:
+          path: target/x86_64-unknown-linux-gnu/release/cocore
+      # - store_artifacts:
+      #     path: target/x86_64-apple-darwin/release/cocore
+
+      # Save caches
+      - save_cache:
+          key: rustup-v1
+          paths:
+            - /usr/local/rustup
+      - save_cache:
+          key: cargo-v1-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}
+          paths:
+            - /usr/local/cargo/registry
+            - /usr/local/cargo/git
