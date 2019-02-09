@@ -10,8 +10,6 @@ jobs:
 
       # Restore caches
       - restore_cache:
-          key: rustup-v2
-      - restore_cache:
           key: cargo-v1-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}
 
       # Add Rust target
@@ -40,10 +38,6 @@ jobs:
       #     path: target/x86_64-apple-darwin/release/cocore
 
       # Save caches
-      - save_cache:
-          key: rustup-v2
-          paths:
-            - /usr/local/rustup
       - save_cache:
           key: cargo-v1-{{ checksum "Cargo.toml" }}-{{ checksum "Cargo.lock" }}
           paths:
