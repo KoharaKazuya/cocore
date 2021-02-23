@@ -1,3 +1,9 @@
+# DEPRECATED
+
+No longer maintained. Please consider replacing with [Pastel](https://github.com/sharkdp/pastel).
+
+---
+
 # cocore
 
 A CLI tool converts color representation such as HSL colors and RGB colors.
